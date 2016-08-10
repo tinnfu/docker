@@ -38,6 +38,10 @@ RUN apt-get install tree -y
 RUN apt-get install inetutils-ping -y
 RUN apt-get install net-tools -y
 RUN apt-get install tmux -y
+RUN apt-get install wget -y
+RUN apt-get install curl -y
+RUN apt-get install man -y
+RUN apt-get install iptables -y
 
 # set env
 WORKDIR /home/admin
