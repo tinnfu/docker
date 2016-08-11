@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM tinnfu/docker:latest
 
 MAINTAINER tinnfu <tinnfu@gmail.com>
 
@@ -42,6 +42,7 @@ RUN apt-get install wget -y
 RUN apt-get install curl -y
 RUN apt-get install man -y
 RUN apt-get install iptables -y
+RUN apt-get install netcat -y
 
 # set env
 WORKDIR /home/admin
