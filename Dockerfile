@@ -6,24 +6,17 @@ USER root
 
 # correct time
 RUN echo 'Asia/Shanghai' > /etc/timezone
-RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+RUN cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 # add user and set passwd
 RUN echo 'root:root' | chpasswd
-RUN useradd admin
-RUN echo 'admin:admin' | chpasswd
-
-# add home-dir
-RUN mkdir -p /home/admin/
-RUN chown admin:admin /home/admin
+RUN if [ ! $(grep '^admin' /etc/passwd | wc -l) ]; then $(useradd admin && echo 'admin:admin' | chpasswd && mkdir -p /home/admin/ && chown admin:admin /home/admin); fi
 
 # add env script
 ADD env.tgz /home/admin/
 
 # add source
-RUN cp -f /etc/apt/sources.list /home/admin/sources.list.back
-RUN cp -f /home/admin/sources.list /etc/apt/sources.list
-RUN cat /home/admin/sources.list.back >> /etc/apt/sources.list
+RUN if [ ! $(grep 163 /etc/apt/sources.list | wc -l) ]; then $(cp -f /etc/apt/sources.list /home/admin/sources.list.back && cp -f /home/admin/sources.list /etc/apt/sources.list && cat /home/admin/sources.list.back >> /etc/apt/sources.list); fi
 
 # install work-tool
 RUN apt-get update
