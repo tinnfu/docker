@@ -36,6 +36,7 @@ RUN apt-get install curl -y
 RUN apt-get install man -y
 RUN apt-get install iptables -y
 RUN apt-get install netcat -y
+RUN apt-get install openssh-server -y
 
 # set env
 WORKDIR /home/admin
